@@ -1,0 +1,24 @@
+name: build
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.1
+    - uses: cachix/install-nix-action@v30
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - uses: cachix/cachix-action@v15
+      with:
+        autoToken: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkMjA1MDJiMy1mMmYxLTQzMmItYWJiNy00NmFmYzg4NGFmMDAiLCJzY29wZXMiOiJjYWNoZSJ9.35HQduFST6GQhbv0khHUYbxfMkswChqd1ZqSeOaYbZE
+    - name: build
+      run: |
+        git clone https://git.sr.ht/~ity/cinny-modify
+        nix-env -iA nixpkgs.jq
+        cd cinny-modify
+        nix flake archive --json \
+          | jq -r '.path,(.inputs|to_entries[].value.path)' \
+          | cachix push itflakes
+        nix build --json \
+          | jq -r '.[].outputs | to_entries[].value' \
+          | cachix push itflakes
