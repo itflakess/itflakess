@@ -10,7 +10,7 @@ jobs:
     - uses: DeterminateSystems/magic-nix-cache-action@main
     - uses: cachix/cachix-action@v15
       with:
-        autoToken: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkMjA1MDJiMy1mMmYxLTQzMmItYWJiNy00NmFmYzg4NGFmMDAiLCJzY29wZXMiOiJjYWNoZSJ9.35HQduFST6GQhbv0khHUYbxfMkswChqd1ZqSeOaYbZE
+        authToken: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkMjA1MDJiMy1mMmYxLTQzMmItYWJiNy00NmFmYzg4NGFmMDAiLCJzY29wZXMiOiJjYWNoZSJ9.35HQduFST6GQhbv0khHUYbxfMkswChqd1ZqSeOaYbZE
     - name: build
       run: |
         git clone https://git.sr.ht/~ity/cinny-modify
